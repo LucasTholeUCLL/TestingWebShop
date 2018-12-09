@@ -6,9 +6,11 @@ import java.util.Comparator;
 
 public class PersonComparatorByFirstName implements Comparator<Person> {
     public int compare(Person p1, Person p2) {
-        if (p1.getFirstName().equals(p2.getFirstName())) {
-            return (p1.getLastName().compareTo(p2.getLastName()));
+        String p1Name = p1.getFirstName().toUpperCase();
+        String p2Name = p2.getFirstName().toUpperCase();
+        if (p1Name.equals(p2Name)) {
+            return (p1.getLastName().toUpperCase().compareTo(p2.getLastName().toUpperCase()));
         }
-        return (p1.getFirstName().compareTo(p2.getFirstName()));
+        return (p1Name.compareTo(p2Name));
     }
 }

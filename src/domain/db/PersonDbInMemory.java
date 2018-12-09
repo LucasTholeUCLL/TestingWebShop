@@ -1,6 +1,7 @@
 package domain.db;
 
 import domain.model.Person;
+import domain.model.Role;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ public class PersonDbInMemory implements PersonDb {
 	private Map<String, Person> persons = new HashMap<>();
 	
 	public PersonDbInMemory () {
-		Person administrator = new Person("admin", "admin@ucll.be", "t", "Ad", "Ministrator");
+		Person administrator = new Person("admin", "admin@ucll.be", "t", "Ad", "Ministrator", Role.ADMIN);
 		add(administrator);
 	}
 	

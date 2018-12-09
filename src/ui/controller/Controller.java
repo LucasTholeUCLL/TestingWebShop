@@ -2,16 +2,14 @@ package ui.controller;
 
 
 import domain.model.Person;
-import domain.model.Product;
+import domain.model.Role;
 import domain.model.ShopService;
-import sun.misc.Request;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -69,28 +67,57 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        String destination = "index.jsp";
+        request.setAttribute("loggedIn", this.checkLoggedIn(request, shopService));
+        request.setAttribute("cartSize", getCartSize(request));
         if (action != null) {
-            RequestHandler handler = null;
-            handler = factory.getController(action, shopService);
-            destination = handler.handleRequest(request, response);
+            try {
+                RequestHandler handler = null;
+                handler = factory.getController(action, shopService);
+                handler.handleRequest(request, response);
+            } catch (NotAuthorizedException e) {
+                request.setAttribute("error", "You have insufficient rights to look at the requested page!");
+                factory.getController("Home", shopService).handleRequest(request, response);
+            }
         } else {
-            destination = factory.getController("Home", shopService).handleRequest(request, response);
+            factory.getController("Home", shopService).handleRequest(request, response);
         }
-        request.setAttribute("loggedIn", this.checkLoggedIn(request));
-        RequestDispatcher view=request.getRequestDispatcher(destination);
-        view.forward(request, response);
+        //System.out.println(request.getAttribute("loggedIn"));
+        //request.getRequestDispatcher(destination).forward(request, response);
+        //response.sendRedirect(destination);
     }
 
-    private String checkLoggedIn(HttpServletRequest request) {
+    public static Person checkLoggedIn(HttpServletRequest request, ShopService shopService) {
         HttpSession session = request.getSession();
 
         if (session.getAttribute("userId") != null) {
             for (Person p : shopService.getPersons()) {
-                if (p.getUserid().equals(session.getAttribute("userId"))) return p.getFirstName();
+                if (p.getUserid().equals(session.getAttribute("userId"))) return p;
             }
-            return "-1";
+            return null;
         }
-        else return "-1";
+        else return null;
+    }
+
+    public static void checkRole(HttpServletRequest request, Role[] roles) {
+        boolean found = false;
+        Person person = (Person) request.getAttribute("loggedIn");
+        if (person != null) {
+            for (Role role : roles) {
+                if (person.getRole().equals(role)) found = true;
+            }
+        }
+        if (!found) {
+            throw new NotAuthorizedException();
+        }
+
+    }
+
+    private int getCartSize(HttpServletRequest request) {
+        if (request.getSession().getAttribute("shoppingCart") == null) return 0;
+        else {
+            int amount = ((List<Object>) request.getSession().getAttribute("shoppingCart")).size();
+
+            return amount;
+        }
     }
 }

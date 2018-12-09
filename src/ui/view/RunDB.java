@@ -31,7 +31,7 @@ public class RunDB {
             String email = result.getString("email");
             String password = result.getString("password");
             try {	// validation of data stored in database
-                Person person = new Person(userid, email, password, firstName, lastName);
+                Person person = new Person(userid, email, password, firstName, lastName, Role.CUSTOMER);
                 System.out.println(person.toString());
             }
             catch (IllegalArgumentException e) {

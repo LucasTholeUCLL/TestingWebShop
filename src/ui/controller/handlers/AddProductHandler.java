@@ -1,17 +1,23 @@
 package ui.controller.handlers;
 
-import domain.model.Person;
 import domain.model.Product;
+import domain.model.Role;
+import ui.controller.Controller;
 import ui.controller.RequestHandler;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddProductHandler extends RequestHandler {
 
     @Override
-    public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Role[] roles = {Role.ADMIN};
+        Controller.checkRole(request, roles);
+
         Product product = new Product();
         ArrayList<String> errors = new ArrayList<String>();
 
@@ -21,12 +27,11 @@ public class AddProductHandler extends RequestHandler {
 
         if (errors.size() < 1) {
             this.getService().addProduct(product);
-            RequestHandler handler = new OverviewProdsHandler();
-            handler.setService(getService());
-            return handler.handleRequest(request, response);
+            response.sendRedirect("Controller?action=OverviewProds");
         } else {
             request.setAttribute("errors", errors);
-            return "addProduct.jsp";
+            request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+            //response.sendRedirect("addProduct.jsp");
         }
     }
 

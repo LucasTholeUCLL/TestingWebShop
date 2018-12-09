@@ -1,9 +1,12 @@
 package domain.db;
 
 import domain.model.Person;
+import domain.model.Role;
 
 import java.sql.*;
 import java.util.*;
+
+//Admin ww = aqsz
 
 public class PersonDbInSql implements PersonDb {
 	private Properties properties;
@@ -40,7 +43,8 @@ public class PersonDbInSql implements PersonDb {
 				String userid = result.getString("userid");
 				String email = result.getString("email");
 				String password = result.getString("password");
-				person = (makePerson(userid, email, password, firstName, lastName));
+				Role role = Role.valueOf(result.getString("role"));
+				person = (makePerson(userid, email, password, firstName, lastName, role));
 			}
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage(), e);
@@ -64,7 +68,8 @@ public class PersonDbInSql implements PersonDb {
 				String userid = result.getString("userid");
 				String email = result.getString("email");
 				String password = result.getString("password");
-				persons.add(makePerson(userid, email, password, firstName, lastName));
+				Role role = Role.valueOf(result.getString("role"));
+				persons.add(makePerson(userid, email, password, firstName, lastName, role));
 			}
 
 		} catch (SQLException e) {
@@ -84,7 +89,7 @@ public class PersonDbInSql implements PersonDb {
 		}
 		//String query = "insert into person(userid, email, password, firstname, lastname) values(\'" + person.getUserid() + "\', \'" + person.getEmail() +
 		//		"\', \'" + person.getPassword() + "\', \'" + person.getFirstName() + "\', \'" + person.getLastName() + "\')";
-        String query = "insert into person(userid, email, password, firstname, lastname) values(?, ?, ?, ?, ?)";
+        String query = "insert into person(userid, email, password, firstname, lastname, role) values(?, ?, ?, ?, ?, ?)";
 
 
 		try (Connection connection = DriverManager.getConnection(url,properties);
@@ -95,6 +100,7 @@ public class PersonDbInSql implements PersonDb {
 		    statement.setString(3, person.getPassword());
 		    statement.setString(4, person.getFirstName());
 		    statement.setString(5, person.getLastName());
+		    statement.setString(6, person.getRole().toString());
 
 			statement.execute();
 
@@ -116,7 +122,7 @@ public class PersonDbInSql implements PersonDb {
 				"', password = '" + person.getPassword() +
 				"', firstname = '" + person.getFirstName() +
 				"', lastname = '" + person.getLastName() + "'  where userid='" + person.getUserid() + "'";*/
-		String query = "update person set email = ?, password = ?, firstname = ?, lastname = ? where userid = ?";
+		String query = "update person set email = ?, password = ?, firstname = ?, lastname = ?, role = ? where userid = ?";
 		try (Connection connection = DriverManager.getConnection(url,properties);
 			 PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -124,7 +130,8 @@ public class PersonDbInSql implements PersonDb {
 		    statement.setString(2, person.getPassword());
 		    statement.setString(3, person.getFirstName());
 		    statement.setString(4, person.getLastName());
-		    statement.setString(5, person.getUserid());
+			statement.setString(5, person.getRole().toString());
+		    statement.setString(6, person.getUserid());
 
 			statement.executeUpdate();
 
@@ -157,9 +164,9 @@ public class PersonDbInSql implements PersonDb {
 		return this.getAll().size();
 	}
 
-	private Person makePerson(String userid, String email, String password, String firstName, String lastName) {
+	private Person makePerson(String userid, String email, String password, String firstName, String lastName, Role role) {
 		try {
-			Person person = new Person(userid, email, password, firstName, lastName);
+			Person person = new Person(userid, email, password, firstName, lastName, role);
 			return (person);
 		}
 		catch (IllegalArgumentException e) {

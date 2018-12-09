@@ -6,16 +6,18 @@ import domain.model.Comparators.PersonComparatorByLastName;
 import domain.model.Person;
 import ui.controller.RequestHandler;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
 public class OverviewHandler extends RequestHandler {
 
     @Override
-    public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Comparator<Person> comparator = new PersonComparatorByFirstName();
         if (request.getCookies() != null) {
             Cookie[] cookies = request.getCookies();
@@ -35,8 +37,8 @@ public class OverviewHandler extends RequestHandler {
                 }
             }
         }
-        if (request.getAttribute("chosenSort") != null) {
-            switch (request.getAttribute("chosenSort").toString()) {
+        if (request.getSession().getAttribute("chosenSort") != null) {
+            switch (request.getSession().getAttribute("chosenSort").toString()) {
                 case "lname":
                     comparator = new PersonComparatorByLastName();
                     break;
@@ -45,6 +47,7 @@ public class OverviewHandler extends RequestHandler {
                     break;
                 default:
             }
+            request.getSession().setAttribute("chosenSort", null);
         }
         //System.out.println(request.getAttribute("chosenSort") + " - overViewHandler");
         //System.out.println(comparator.toString() + " - overViewHandler");
@@ -53,6 +56,8 @@ public class OverviewHandler extends RequestHandler {
         List<Person> persons = getService().getPersons();
         persons.sort(comparator);
         request.setAttribute("personDB", persons);
-        return "personoverview.jsp";
+
+        request.getRequestDispatcher("personoverview.jsp").forward(request, response);
+        //return "personoverview.jsp";
     }
 }
