@@ -6,8 +6,6 @@ import domain.model.Role;
 import java.sql.*;
 import java.util.*;
 
-//Admin ww = aqsz
-
 public class PersonDbInSql implements PersonDb {
 	private Properties properties;
 	private String url;
