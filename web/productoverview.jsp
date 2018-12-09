@@ -15,7 +15,19 @@
             <jsp:param name="title" value="Product Overview"></jsp:param>
         </jsp:include>
     <main>
-        <table>
+        <c:if test="${not empty message}" >
+            <div class="alert-success">
+                ${message}
+            </div>
+        </c:if>
+        <c:if test="${not empty error}" >
+            <div class="alert-danger">
+                <p>${error}</p>
+            </div>
+        </c:if>
+        <input type="text" id="productFilterInput" onkeyup="filterProducts()" placeholder="Search for products..">
+        <script type="text/javascript" src="js/filter.js"></script>
+        <table id="products">
             <tr>
                 <th>Name</th>
                 <th>Description</th>
@@ -25,20 +37,30 @@
             </tr>
             <c:forEach var="product" items="${productDB}">
                 <tr>
-                    <td><a href="Controller?action=UpdateProductForm&&id=${product.productId}">${product.name}</a></td>
+                    <c:choose>
+                        <c:when test="${loggedIn.role == 'ADMIN'}">
+                            <td><a href="Controller?action=UpdateProductForm&&id=${product.productId}">${product.name}</a></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><c:out value='${product.name}'/></td>
+                        </c:otherwise>
+                    </c:choose>
                     <td><c:out value='${product.description}'/></td>
-                    <td><c:out value='${product.price}'/></td>
-                    <td><a href="Controller?action=DeleteProductForm&&id=${product.productId}"><img src="images/delete.png"></a></td>
-                    <td><a href="Controller?action=AddToCart&&id=${product.productId}">Add to cart!</td>
-                    <!--
-                     <form method="post" action="Controller?action=AddToCart" novalidate="novalidate">
-                        <input type="number" id="amount" name="amount"
-                               required value="0">
-                        <input hidden="hidden" type="text" id="id" name="id" value="${product.productId}" required>
+                    <td><c:out value='${product.price} €'/></td>
+                    <!---<td><a href="Controller?action=AddToCart&&id=${product.productId}">Add to cart!</td>--->
+
+                     <td><form method="post" action="Controller?action=AddToCart" novalidate="novalidate">
+                        <input type="number" id="amount" name="amount" min="1" max="10000" aria-required="true"
+                               required value="1">
+                        <input type="hidden" id="id" name="id" value="${product.productId}" required>
                         <input type="submit" id="submit" value="Add to cart">
-                        <a href="Controller?action=AddToCart&&id=${product.productId}">Add to cart!</a>
-                    </form>
-                    --->
+                    </form></td>
+                    <td>
+                        <c:if test="${loggedIn.role == 'ADMIN'}">
+                            <a href="Controller?action=DeleteProductForm&&id=${product.productId}"><img src="images/delete.png" alt="remove Product"></a>
+                        </c:if>
+                    </td>
+
                 </tr>
             </c:forEach>
 

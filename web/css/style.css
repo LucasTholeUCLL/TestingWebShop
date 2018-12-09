@@ -4,6 +4,173 @@
 	padding: 0;
 }
 
+#myProgress{
+	margin: 5px;
+}
+
+.tab {
+	display: none;
+}
+
+#myProgress {
+	width: 100%;
+	background-color: lightgreen;
+}
+#myBar {
+	width: 1%;
+	height: 30px;
+	background-color: darkgreen;
+}
+
+#barItem {
+    flex: 20%;
+    color: white;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.autocomplete {
+	/*the container must be positioned relative:*/
+	position: relative;
+	display: inline-block;
+}
+
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 -16px;
+}
+
+.col-25 {
+	flex: 25%;
+}
+
+.col-50 {
+	flex: 50%;
+}
+
+.col-75 {
+	flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+	padding: 0 16px;
+}
+
+.w3-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.w3-green{color:#fff!important;background-color:#4CAF50}
+.w3-green:hover{background-color: #85e589}
+.w3-round-large{border-radius:8px}
+
+.icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+}
+
+.container {
+	background-color: #f2f2f2;
+	padding: 15px 20px 15px 20px;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+}
+
+.filledField{
+    background-color: lightgrey;
+    display: inline-block;
+}
+
+.subsubcontainer {
+    background-color: cyan;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    margin: 20px;
+    display: inline-block;
+}
+
+.subcontainer {
+    background-color: lightblue;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    margin: 20px;
+    display: inline-block;
+}
+
+.buttonsForm {
+	display: flex;
+	justify-content: space-between;
+	align-content: space-between;
+}
+
+#orderFormWarning {
+    color: red;
+}
+
+input.invalid {
+	background-color: #ffdddd;
+    border-color: red;
+}
+
+tr:nth-child(even){
+	background-color: #f2f2f2;
+	border-left: 5px solid #f2f2f2;
+	border-top: 5px solid #f2f2f2;
+}
+
+tr:nth-child(odd){
+    background-color: #FFF;
+    border-left: 5px solid #f2f2f2;
+    border-top: 5px solid #f2f2f2;
+}
+
+
+
+#amount {
+	position: relative;
+	margin-top: 0px;
+	width: 40%;
+	float: top;
+	margin-left: 5px;
+	margin-right: 10px;
+}
+
+tr {
+	height: 20px;
+}
+
+th, td {
+	border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+	border-left: 5px solid #ccc9c9;
+	border-top: 5px solid #ccc9c9;
+	background-color: #ccc9c9;
+}
+
+.btn {
+	flex:35%;
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px;
+	margin: 10px;
+	border: none;
+	width: 35%;
+	height: 10%;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.btn:hover {
+	background-color: #45a049;
+}
+
 body {
 	font-family: arial,sans-serif;
 	font-size: 90%;
@@ -26,6 +193,14 @@ nav ul {
 	background-color: #b99703;
 	box-sizing: border-box;
 	margin-bottom: 1em;
+}
+
+#productFilterInput {
+	width: 100%; /* Full-width */
+	font-size: 16px; /* Increase font-size */
+	padding: 12px 12px 12px 12px; /* Add some padding */
+	border: 1px solid #ddd; /* Add a grey border */
+	margin-bottom: 12px; /* Add some space below the input */
 }
 
 nav ul li {
@@ -92,6 +267,20 @@ form {
 }
 .alert-danger ul {
     list-style-type: none;
+}
+
+.alert-success {
+	padding: 0.5em;
+	background-color: #a8ffa0;
+	border: 1px solid #036305;
+	color: #0ba00e;
+	border-radius: 3px;
+	width: 100%;
+	margin-bottom: 1em;
+	box-sizing: border-box;
+}
+.alert-success ul {
+	list-style-type: none;
 }
 label,input,textarea {
     margin-bottom: 16px;
@@ -192,7 +381,7 @@ input {
     textarea {
         vertical-align: middle;    
     }
-	
+
 	
 }
 

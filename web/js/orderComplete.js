@@ -1,0 +1,1 @@
+document.getElementById("myBar").style.width = 100 + '%';

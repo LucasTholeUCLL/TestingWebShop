@@ -28,16 +28,22 @@
                 <th>E-mail</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Delete</th>
                 <th>Check password</th>
+                <c:if test="${loggedIn.role == 'ADMIN'}">
+                    <th>Delete</th>
+                </c:if>
             </tr>
             <c:forEach var="person" items="${personDB}">
                 <tr>
                     <td><c:out value='${person.email}'/></td>
                     <td><c:out value='${person.firstName}'/></td>
                     <td><c:out value='${person.lastName}'/></td>
-                    <td><a href="Controller?action=DeletePersonForm&&id=${person.userid}"><img src="images/delete.png"></a></td>
                     <td><a href="Controller?action=CheckPasswordForm&&id=${person.userid}">Check</a></td>
+                    <td>
+                        <c:if test="${loggedIn.role == 'ADMIN'}">
+                            <a href="Controller?action=DeletePersonForm&&id=${person.userid}"><img src="images/delete.png"></a>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
 

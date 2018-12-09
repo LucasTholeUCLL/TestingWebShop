@@ -15,6 +15,16 @@
 			<jsp:param name="title" value="Home"></jsp:param>
 		</jsp:include>
 		<main>
+			<c:if test="${not empty error}">
+				<div class="alert-danger">
+					<p>${error}</p>
+				</div>
+			</c:if>
+            <c:if test="${not empty message}" >
+                <div class="alert-success">
+                        ${message}
+                </div>
+            </c:if>
 		<p>
 		Sed ut perspiciatis unde omnis iste natus error sit
 		voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque

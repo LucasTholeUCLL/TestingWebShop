@@ -26,16 +26,18 @@
         </div>
     </c:if>
 
-    <h3>Please enter your userid and password</h3>
-    <form method="post" action="Controller?action=LogIn" novalidate="novalidate">
-    	<!-- novalidate in order to be able to run tests correctly -->
-        <p><label for="userid"></label>Userid:<input id="userid" name="userid"
-                                                     required value=""> </p>
-        <p><label for="password">Password:</label><input type="password" id="password" name="password"
-                                                           required value=""> </p>
-        <p><input type="submit" id="logIn" value="Log In"><a href="Controller">Cancel</a></p>
-        
-    </form>
+    <div class="container">
+        <h3>Please enter your userid and password</h3>
+        <form method="post" action="Controller?action=LogIn" novalidate="novalidate">
+            <!-- novalidate in order to be able to run tests correctly -->
+            <label for="userid">Userid:</label>
+            <input id="userid" name="userid" required value=""> </p>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required value=""> </p>
+            <input type="submit" id="logIn" value="Log In"><a href="Controller">Cancel</a></p>
+
+        </form>
+    </div>
     <p>${result}</p>
 </main>
 <footer>

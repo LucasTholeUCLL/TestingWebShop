@@ -11,11 +11,11 @@
     <h1>
         <span>Web shop<br>
         <c:choose>
-            <c:when test='${loggedIn eq "-1"}'>
-                <a href="Controller?action=LogInForm">Log In</a>
+            <c:when test='${not empty loggedIn}'>
+                Logged in as: '${loggedIn.firstName}' <a href="Controller?action=LogOut">Log out</a>
             </c:when>
             <c:otherwise>
-                Logged in as: '${loggedIn}' <a href="Controller?action=LogOut">Log out</a>
+                <a href="Controller?action=LogInForm">Log In</a>
             </c:otherwise>
         </c:choose>
         </span>
@@ -25,9 +25,11 @@
             <li id="actual"><a href="Controller">Home</a></li>
             <li><a href="Controller?action=Overview">Users</a></li>
             <li><a href="Controller?action=OverviewProds">Products</a></li>
-            <li><a href="Controller?action=AddProductPage">Add Product</a></li>
+            <c:if test="${loggedIn.role == 'ADMIN'}">
+                <li><a href="Controller?action=AddProductPage">Add Product</a></li>
+            </c:if>
             <li><a href="Controller?action=SignUp">Sign up</a></li>
-            <li><a href="Controller?action=GetShoppingCart">Cart</a></li>
+            <li><a href="Controller?action=GetShoppingCart">Cart (${cartSize})</a></li>
         </ul>
     </nav>
     <h2>${param.title}</h2>

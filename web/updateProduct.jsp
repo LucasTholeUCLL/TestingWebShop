@@ -25,20 +25,21 @@
 		</ul>
 	</div>
 </c:if>
+    <div class="container">
+        <form method="post" action="Controller?action=UpdateProduct" novalidate="novalidate">
+            <!-- novalidate in order to be able to run tests correctly -->
+            <p><label for="name">Product Name</label><input type="text" id="name" name="name"
+             required value="<c:out value='${namePrev}'/>"> </p>
+            <p><label for="price">Price</label><input type="number" id="price" name="price"
+             required value="<c:out value='${pricePrev}'/>"> </p>
+            <p><label for="description">Description</label><input type="text" id="description" name="description"
+             required value="<c:out value='${descriptionPrev}'/>"> </p>
+            <p><label for="productId">productId</label><input type="hidden" id="productId" name="productId"
+             required value="${productId}"> ${productId}</p>
+            <p><input type="submit" id="updateProduct" value="Update Product"></p>
 
-    <form method="post" action="Controller?action=UpdateProduct" novalidate="novalidate">
-    	<!-- novalidate in order to be able to run tests correctly -->
-        <p><label for="name">Product Name</label><input type="text" id="name" name="name"
-         required value="<c:out value='${namePrev}'/>"> </p>
-        <p><label for="price">Price</label><input type="number" id="price" name="price"
-         required value="<c:out value='${pricePrev}'/>"> </p>
-        <p><label for="description">Description</label><input type="text" id="description" name="description"
-         required value="<c:out value='${descriptionPrev}'/>"> </p>
-        <p><label for="productId">productId</label><input type="hidden" id="productId" name="productId"
-         required value="${productId}"> ${productId}</p>
-        <p><input type="submit" id="updateProduct" value="Update Product"></p>
-        
-    </form>
+        </form>
+    </div>
 </main>
 <footer>
 &copy; Webontwikkeling 3, UC Leuven-Limburg

@@ -26,20 +26,22 @@
         </div>
     </c:if>
 
-    <form method="post" action="Controller?action=AddPerson" novalidate="novalidate">
-    	<!-- novalidate in order to be able to run tests correctly -->
-        <p><label for="userid">User id</label><input type="text" id="userid" name="userid"
-         required value="<c:out value='${useridPrev}'/>"> </p>
-        <p><label for="firstName">First Name</label><input type="text" id="firstName" name="firstName"
-         required value="<c:out value='${firstNamePrev}'/>"> </p>
-        <p><label for="lastName">Last Name</label><input type="text" id="lastName" name="lastName"
-         required value="<c:out value='${lastNamePrev}'/>"> </p>
-        <p><label for="email">Email</label><input type="email" id="email" name="email" required value="<c:out value='${emailPrev}'/>"></p>
-        <p><label for="password">Password</label><input type="password" id="password"  name="password"
-         required> </p>
-        <p><input type="submit" id="signUp" value="Sign Up"></p>
-        
-    </form>
+    <div class="container">
+        <form method="post" action="Controller?action=AddPerson" novalidate="novalidate">
+            <!-- novalidate in order to be able to run tests correctly -->
+            <p><label for="userid">User id</label><input type="text" id="userid" name="userid"
+             required value="<c:out value='${useridPrev}'/>"> </p>
+            <p><label for="firstName">First Name</label><input type="text" id="firstName" name="firstName"
+             required value="<c:out value='${firstNamePrev}'/>"> </p>
+            <p><label for="lastName">Last Name</label><input type="text" id="lastName" name="lastName"
+             required value="<c:out value='${lastNamePrev}'/>"> </p>
+            <p><label for="email">Email</label><input type="email" id="email" name="email" required value="<c:out value='${emailPrev}'/>"></p>
+            <p><label for="password">Password</label><input type="password" id="password"  name="password"
+             required> </p>
+            <p><input type="submit" id="signUp" value="Sign Up"></p>
+
+        </form>
+    </div>
 </main>
 <footer>
 &copy; Webontwikkeling 3, UC Leuven-Limburg

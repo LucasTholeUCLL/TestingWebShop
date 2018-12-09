@@ -16,16 +16,17 @@
             <jsp:param name="title" value="Check password"></jsp:param>
         </jsp:include>
 <main>
-    <h3>Fill out your password</h3>
-    <form method="post" action="Controller?action=CheckPassword" novalidate="novalidate">
-    	<!-- novalidate in order to be able to run tests correctly -->
-        <p><label for="userid"></label><input type="hidden" id="userid" name="userid"
-                                                     required value="${person.userid}"> </p>
-        <p><label for="password">Password:</label><input type="password" id="password" name="password"
-                                                           required value=""> </p>
-        <p><input type="submit" id="checkPassword" value="Check"><a href="Controller?action=Overview">Cancel</a></p>
-        
-    </form>
+    <div class="container">
+        <h3>Fill out your password</h3>
+        <form method="post" action="Controller?action=CheckPassword" novalidate="novalidate">
+            <!-- novalidate in order to be able to run tests correctly -->
+            <p><label for="userid"></label><input type="hidden" id="userid" name="userid"
+                                                         required value="${person.userid}"> </p>
+            <p><label for="password">Password:</label><input type="password" id="password" name="password"
+                                                               required value=""> </p>
+            <p><input type="submit" id="checkPassword" value="Check"><a href="Controller?action=Overview">Cancel</a></p>
+        </form>
+    </div>
     <p>${result}</p>
 </main>
 <footer>
